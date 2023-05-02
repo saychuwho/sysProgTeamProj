@@ -2,7 +2,8 @@
 - repository for system programming team projcet during 3-1 semester.
 - made to access easily in RPi.
 
-## how to use wiringPi
+## General Informations
+### how to use wiringPi
 
 - [wiringpi site](wiringpi.com)
 - example code written in C is below
@@ -33,3 +34,16 @@ sudo dpkg -i wiringpi-latest.deb
 sudo usermod -a -G gpio <username>
 ```
 
+### Using getch() in linux
+
+- you have to make it by yourself.
+- [see the Practice code in here](/PracticeKeyinput.c)
+
+### Erasing Console Charactors
+
+- 
+
+## what I have to make
+
+- keypad control system in C!
+- [ ] make temp program with keypad inside keyboard. [code](/TempKeypadCon.c) / [Practice](/PracticeKeyinput.c)

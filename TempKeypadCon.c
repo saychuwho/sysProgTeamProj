@@ -33,8 +33,10 @@ int main(){
     for(int i=0;i<10;i++)
         pushed_num[i] = 0;
     int last_pushed = 0;
-
     
+    while(ture){
 
+    }
+    
     return 0;
 }

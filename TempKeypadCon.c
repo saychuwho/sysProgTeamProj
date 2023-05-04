@@ -1,7 +1,7 @@
 #include <stdio.h>
-#include <term.h>  
-#include <termios.h>  
-#include <unistd.h>  
+#include <term.h>
+#include <termios.h>
+#include <unistd.h>
 #include <string.h>
 
 // 사용되는 상수들을 define하는 곳
@@ -44,19 +44,19 @@ int getch(void)
 char translate_num(int* pushed_num, int last_pushed, int mode){
     char temp = 0;
     if((mode%3) == 0){ // 소문자
-	temp = 97 + (last_pushed-1)*3 + (*(pushed_num + last_pushed) % 3);
-	if(temp==123){
-	    temp = 32;
-	}
+        temp = 97 + (last_pushed-1)*3 + (*(pushed_num + last_pushed) % 3);
+        if(temp==123){
+            temp = 32;
+        }
     }
     else if((mode%3) == 1){ // 숫자
-	temp = 48 + last_pushed;
+	    temp = 48 + last_pushed;
     }
     else{ // 대문자
-	temp = 65 + (last_pushed-1)*3 + (*(pushed_num + last_pushed) % 3);
-	if(temp==91){
-	    temp = 32;
-	}
+        temp = 65 + (last_pushed-1)*3 + (*(pushed_num + last_pushed) % 3);
+        if(temp==91){
+            temp = 32;
+        }
     }
     return temp;
 }

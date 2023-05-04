@@ -22,6 +22,7 @@ int getch(void)
   
 int main(void)  
 {  
+    printf("%c\n", 97);
     int ch;  
   
     for(; !(ch=='\n');){  

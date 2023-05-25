@@ -1,7 +1,30 @@
+/* how to use this code
+일단 리눅스 환경에서만 돌아가는 코드입니다. 라즈베리 파이에서나 우분투 가상머신 상에서 컴파일해야 합니다.
+비주얼 스튜디오에서는 컴파일 되지도 않고 돌아가지도 않을겁니다.
+
+컴파일 하기 이전에 대부분 term.h가 없을 겁니다. 다음 명령어를 쉘에 입력해 term.h를 추가합니다
+>sudo apt update
+>sudo apt upgrade
+>sudo apt-get install libncurses5-dev libncursesw5-dev
+
+위 설치가 완료되면 gcc를 이용해 컴파일합니다.
+>gcc -o tempkeypad TempKeypadCon.c
+
+이후 다음 명령어를 치면 정상적으로 돌아갈 겁니다.
+>./tempkeypad
+
+이 코드는 키보드 숫자 입력이 키패드라고 가정하고, 옛날 피쳐폰처럼 영어 대문자, 소문자, 숫자를 입력하도록 만든 코드입니다.
+모드 변환은 '.'키를 이용하면 모드 변환이 됩니다.
+각 키의 역할은 다음과 같습니다. (9에서 _는 공백을 의미합니다)
+1:abc 2:def 3:ghi 4:jkl 5:mno 6:pqr 7:stu 8:vwx 9:yz_ 
+모드는 소문자 >> 숫자 >> 대문자 순으로 변합니다.
+문장 입력을 완료하고 엔터를 누르면, 입력된 문장이 외부 text00.txt에 저장되고 프로그램이 종료됩니다.
+*/
+
 #include <stdio.h>
-#include <term.h>  
-#include <termios.h>  
-#include <unistd.h>  
+#include <term.h>
+#include <termios.h>
+#include <unistd.h>
 #include <string.h>
 
 // 사용되는 상수들을 define하는 곳
@@ -44,19 +67,19 @@ int getch(void)
 char translate_num(int* pushed_num, int last_pushed, int mode){
     char temp = 0;
     if((mode%3) == 0){ // 소문자
-	temp = 97 + (last_pushed-1)*3 + (*(pushed_num + last_pushed) % 3);
-	if(temp==123){
-	    temp = 32;
-	}
+        temp = 97 + (last_pushed-1)*3 + (*(pushed_num + last_pushed) % 3);
+        if(temp==123){
+            temp = 32;
+        }
     }
     else if((mode%3) == 1){ // 숫자
-	temp = 48 + last_pushed;
+	    temp = 48 + last_pushed;
     }
     else{ // 대문자
-	temp = 65 + (last_pushed-1)*3 + (*(pushed_num + last_pushed) % 3);
-	if(temp==91){
-	    temp = 32;
-	}
+        temp = 65 + (last_pushed-1)*3 + (*(pushed_num + last_pushed) % 3);
+        if(temp==91){
+            temp = 32;
+        }
     }
     return temp;
 }

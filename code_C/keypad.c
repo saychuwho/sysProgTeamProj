@@ -94,8 +94,6 @@ int main(){
         }
 	else if(ch==MODESELECT){
 	    mode++;
-	    if(mode > 2)
-		mode = 0;
 	}
         // 1:49 2:50 3:51 4:52 5:53 6:54 7:55 8:56 9:57 0:48 ' ':32
         else{

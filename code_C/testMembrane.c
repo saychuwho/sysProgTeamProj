@@ -5,8 +5,9 @@
 #define COLS 4
 
 char pressedKey = '\0';
-int rowPins[ROWS] = {29,28,27,26};
-int colPins[COLS] = {25,24,23,22};
+int rowPins[ROWS] = {6,13,19,26};
+int colPins[COLS] = {12,16,20,21};
+
 
 char keys[ROWS][COLS] = {
     {'1','2','3','A'},
@@ -23,7 +24,7 @@ void init_keypad(){
 
     for(int r=0; r < ROWS; r++){	
 	pinMode(rowPins[r], INPUT);
-	digitalWrite(rowPins[r], PUD_UP);
+	digitalWrite(rowPins[r], PUD_DOWN);
     }
 }
 
@@ -57,7 +58,7 @@ char get_key(){
 }
 
 int main(void){
-    wiringPiSetup();
+    wiringPiSetupGpio();
 
     init_keypad();
 
@@ -68,9 +69,8 @@ int main(void){
 	    printf("pressed : %c\n", x);
 	else
 	    printf("no key pressed\n");
-	delay(250);
+	delay(100);
     }
 
     return 0;
 }
-

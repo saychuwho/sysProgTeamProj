@@ -1,13 +1,14 @@
 #include <wiringPi.h>
 #include <stdio.h>
+#include <unistd.h>
 
-#include "membrane.h"
+#include "../include/membrane.h"
 
 
 char keys[ROWS][COLS] = {
-    {'1','2','3','A'},
-    {'4','5','6','B'},
-    {'7','8','9','C'},
+    {'1','2','3',127},
+    {'4','5','6',10},
+    {'7','8','9',46},
     {'*','0','#','D'}
 };
 

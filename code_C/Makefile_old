@@ -1,0 +1,29 @@
+CC = gcc
+
+CXXFLAGS = -Wall
+LDFLAGS = -lwiringPi
+INCLUDE = -Iinclude/
+SRC_DIR = ./src
+OBJ_DIR = ./obj
+TARGET = keypadMain
+
+SRCS = $(notdir $(wildcard $(SRC_DIR)/*.c))
+OBJS = $(SRC:.c=.o)
+DEPS = $(SRCS:.c=.d)
+
+OBJECTS = $(patsubst %.o,$(OBJ_DIR)/%.o,$(OBJS))
+DEPS = $(OBJECT:.o=.d)
+
+all: $(TARGET)
+
+$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c
+	$(CC) $(CXXFLAGS) $(INCLUDE) -c $< -o $@ -MD $(LDFLAGS)
+
+$(TARGET) : $(OBJECT)
+	$(CC) $(CXXFLAGS) $(OBJECTS) -o $(TARGET) $(LDFLAGS)
+
+.PHONY: clean all
+clean:
+	rm -f $(OBJECTS) $(DEPS) $(TARGET)
+
+-include $(DEPS)

@@ -9,12 +9,32 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include <term.h>
+#include <termios.h>
+
 #include "../include/membrane.h"
 
 // A는 backspace, B는 enter, C는 mode select
 #define ENTER 10
 #define BACKSPACE 127
 #define MODESELECT 46
+
+int getch(void)  
+{  
+  int ch;  
+  struct termios buf;  
+  struct termios save;  
+  
+   tcgetattr(0, &save);  
+   buf = save;  
+   buf.c_lflag &= ~(ICANON|ECHO);  
+   buf.c_cc[VMIN] = 1;  
+   buf.c_cc[VTIME] = 0;  
+   tcsetattr(0, TCSAFLUSH, &buf);  
+   ch = get_keys();  
+   tcsetattr(0, TCSAFLUSH, &save);  
+   return ch;  
+}
 
 // pushed_num에 있는 숫자들이 실제로 무슨 글자인지 해독하는 부분
 char translate_num(int* pushed_num, int last_pushed, int mode){
@@ -61,12 +81,15 @@ int main(void){
     char ch = '\0';
 
     while(1){
+	/*	
 	while(1){
 	    ch = get_keys();
 	    usleep(1250);
 	    if(ch != '\0')
 		break;
 	}
+	*/
+	ch = getch();
 	// 안전하게 하기 위한 code block
 	if(ch != '\0'){
 	    // debug

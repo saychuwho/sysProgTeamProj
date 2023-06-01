@@ -13,6 +13,6 @@ char translate_num(int* pushed_num, int last_pushed, int mode);
 
 void init_keypad();
 
-void input_Q(char* buffer);
+void input_Question(char* buffer);
 
 #endif

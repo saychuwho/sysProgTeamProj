@@ -2,14 +2,14 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "../include/membrane.h"
+#include "membrane_old.h"
 
 
 char keys[ROWS][COLS] = {
     {'1','2','3',127},
     {'4','5','6',10},
     {'7','8','9',46},
-    {'*','0','#','D'}
+    {'*','0','#',45}
 };
 
 
@@ -30,49 +30,34 @@ void init_keypad(){
 }
 
 // int를 return하도록 변형
-char readLine(int line, char* characters){
-    char tmp = 0;
+// 그리고 tmp 포인터를 받아서 return하지 말고, pointer 값을 바꾸도록 만들자.
+void readLine(int line, char* characters, char* tmp){
     digitalWrite(line, HIGH);
     if(digitalRead(C1) == HIGH){
-	tmp = characters[0];
+	*tmp = characters[0];
 	digitalWrite(line, LOW);
-	return tmp;
     }
     if(digitalRead(C2) == HIGH){
-	tmp = characters[1];
+	*tmp = characters[1];
 	digitalWrite(line, LOW);
-	return tmp;
     }
     if(digitalRead(C3) == HIGH){
-	tmp = characters[2];
+	*tmp = characters[2];
 	digitalWrite(line, LOW);
-	return tmp;
     }
     if(digitalRead(C4) == HIGH){
-	tmp = characters[3];
+	*tmp = characters[3];
 	digitalWrite(line, LOW);
-	return tmp;
     }
     digitalWrite(line, LOW);
-    return tmp;
 }
 
 char get_keys(){
     char tmp= '\0';
-    while(1){
-	tmp = readLine(L1, keys[0]);
-	if(tmp != '\0')
-	    return tmp;
-	tmp = readLine(L2, keys[1]);
-	if(tmp != '\0')
-	    return tmp;
-	tmp = readLine(L3, keys[2]);
-	if(tmp != '\0')
-	    return tmp;
-	tmp = readLine(L4, keys[3]);
-	if(tmp != '\0')
-	    return tmp;
-    }
+    readLine(L1, keys[0], &tmp);
+    readLine(L2, keys[1], &tmp);
+    readLine(L3, keys[2], &tmp);
+    readLine(L4, keys[3], &tmp);
     return tmp;
 }
 

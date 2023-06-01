@@ -16,7 +16,7 @@
 
 void init_keypad();
 
-char readLine(int line, char* characters);
+void readLine(int line, char* characters, char* tmp);
 
 char get_keys();
 

@@ -12,12 +12,13 @@
 #include <term.h>
 #include <termios.h>
 
-#include "../include/membrane.h"
+#include "membrane_old.h"
 
-// A는 backspace, B는 enter, C는 mode select
+// A는 backspace, B는 enter, C는 mode select, D는 글자입력
 #define ENTER 10
 #define BACKSPACE 127
 #define MODESELECT 46
+#define CHARIN 45
 
 int getch(void)  
 {  
@@ -77,26 +78,17 @@ int main(void){
     output = fopen(filename, "w");
     
     // 문장을 하나 넣어서, 이때 입력이 제대로 되는지 확인해보자.
-    printf("[Input Question]: ");
+    //printf("[Input Question]: ");
     char ch = '\0';
 
     while(1){
-	/*	
-	while(1){
-	    ch = get_keys();
-	    usleep(1250);
-	    if(ch != '\0')
-		break;
-	}
-	*/
 	ch = getch();
-	// 안전하게 하기 위한 code block
-	if(ch != '\0'){
+
 	    // debug
 	    //printf("DEBUG total : %c\n", ch);
 
 	    int get_int = (int)ch;
-	    if(get_int==ENTER && !(last_pressed_key==0)){
+	    if(get_int==CHARIN){
 		// 가장 마지막으로 입력된 거를 출력해야 한다.
 		// debug
 		//printf("DEBUG : 1\n");
@@ -111,7 +103,7 @@ int main(void){
 		    pressed_key[i] = -1;
 		last_pressed_key = 0;
 	    }
-	    else if(get_int==ENTER && (last_pressed_key==0)){
+	    else if(get_int==ENTER){
 		// debug
 		//printf("DEBUG : 2\n");
 		printf("\n");
@@ -128,7 +120,7 @@ int main(void){
 		mode++;
 	    }
 	    // 1:49 2:50 3:51 4:52 5:53 6:54 7:55 8:56 9:57 0:48 ' ':32
-	    else{
+	    else if(!(get_int==CHARIN)){
 		// debug
 		//printf("DEBUG : 5\n");
 		last_pressed_key = get_int-48;
@@ -140,20 +132,19 @@ int main(void){
 		//printf("DEBUG : 6\n");
 		printf("\b\b ");
 	    }
-	    else if(get_int==ENTER || get_int==MODESELECT){
+	    else if(get_int==ENTER || get_int==CHARIN || get_int==MODESELECT){
 		// debug
 		//printf("DEBUG : 7\n");
 		continue;
 	    }
-	    else{
+	    else if(get_int != '\0'){
 		// debug
 		//printf("DEBUG : 8\n");
 		char printing_char = translate_num(pressed_key, last_pressed_key, mode);
 		if(printing_char==123)
 		    printing_char = 32;
-		printf("%c", printing_char);
+		printf("\b%c", printing_char);
 	    }
-	}
     }
     // debug
     //printf("DEBUG : 9\n");

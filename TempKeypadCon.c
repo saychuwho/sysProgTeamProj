@@ -105,7 +105,7 @@ int main(){
         if(ch==ENTER && !(last_pushed==0)){
             // 가장 마지막으로 입력된 거를 출력해야 한다.
             char temp = translate_num(pushed_num, last_pushed, mode);
-	    if(temp == 123)
+	        if(temp == 123)
                 temp = 32;
             strncat(buffer, &temp, 1);
             printf(" ");
@@ -121,26 +121,26 @@ int main(){
         else if(ch==BACKSPACE){
 	    buffer[strlen(buffer)-1] = '\0';
         }
-	else if(ch==MODESELECT){
-	    mode++;
-	}
-        // 1:49 2:50 3:51 4:52 5:53 6:54 7:55 8:56 9:57 0:48 ' ':32
-        else{
-            last_pushed = ch-48;
-            pushed_num[ch-48]++;
+        else if(ch==MODESELECT){
+            mode++;
         }
-        // 글자를 출력하는 부분
-	if(ch==BACKSPACE){
-	    printf("\b\b ");
-	}
-	else if(ch==ENTER || ch==MODESELECT){
-	    continue;
-	}
-	else{
-            char printing_char = translate_num(pushed_num, last_pushed, mode);
-            if(printing_char==123)
-                printing_char = 32;
-            printf("\b%c", printing_char);
+            // 1:49 2:50 3:51 4:52 5:53 6:54 7:55 8:56 9:57 0:48 ' ':32
+            else{
+                last_pushed = ch-48;
+                pushed_num[ch-48]++;
+            }
+            // 글자를 출력하는 부분
+        if(ch==BACKSPACE){
+            printf("\b\b ");
+        }
+        else if(ch==ENTER || ch==MODESELECT){
+            continue;
+        }
+        else{
+                char printing_char = translate_num(pushed_num, last_pushed, mode);
+                if(printing_char==123)
+                    printing_char = 32;
+                printf("\b%c", printing_char);
         }
     }
     buffer[strlen(buffer)] = '\n';

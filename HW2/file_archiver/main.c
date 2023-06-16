@@ -7,6 +7,8 @@
 #include <sys/stat.h>
 #include <stdbool.h>
 
+#define BUFFER_SIZE 32
+
 // DEBUG
 bool DEBUG = false;
 
@@ -192,7 +194,7 @@ void pack(char* archive_filename, char* src_directory){
 
 
     // 마지막으로 파일의 내용을 차례대로 저장하자.
-    unsigned int buffer_size = 64;
+    unsigned int buffer_size = BUFFER_SIZE;
     for(unsigned int i=0;i<file_num;i++){
         //if(DEBUG) printf("%s\n", filename_write[i]);
         //if(DEBUG) printf("%d\n", file_size[i]);
@@ -286,7 +288,7 @@ void unpack(char* archive_filename, char* dest_directory){
     strcpy(tempfilename, dest_directory);
     strcat(tempfilename, "/");
 
-    unsigned int buffer_size = 64;
+    unsigned int buffer_size = BUFFER_SIZE;
 
     for(unsigned int i=0;i<file_num;i++){
         char* tempfilename2 = (char *)malloc(sizeof(char)*100);
@@ -418,7 +420,7 @@ void add_file(char* archive_filename, char* target_filename){
     // 마지막으로 데이터를 쓰자. 우선 arch 속 데이터부터 집어넣자
 
     // 마지막으로 파일의 내용을 차례대로 저장하자.
-    unsigned int buffer_size = 64;
+    unsigned int buffer_size = BUFFER_SIZE;
     for(unsigned int i=0;i<file_num;i++){
         
         // 파일의 크기를 이용해 몇번의 buffer를 사용해야 하는지 파악
@@ -558,7 +560,7 @@ void del_file(char* archive_filename, char* target_filename){
 
     // 마지막으로, temp file에 이전 archive_file의 내용들을 집어넣자.
     // 마지막으로 파일의 내용을 차례대로 저장하자.
-    unsigned int buffer_size = 64;
+    unsigned int buffer_size = BUFFER_SIZE;
     for(unsigned int i=0;i<file_num;i++){
         // 파일의 크기를 이용해 몇번의 buffer를 사용해야 하는지 파악
         unsigned int temp_iter = (file_size[i] / buffer_size)+1;
